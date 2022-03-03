@@ -24,6 +24,8 @@ namespace TgSpamer
 
                     return null;
                 }).Where(ch => ch != null));
+            else
+                File.WriteAllText(ChatsToSpamFile, "# Впишіть сюди ID або назви чатів з файлу chatIds.txt, в яких будемо постити");
         }
     }
 }

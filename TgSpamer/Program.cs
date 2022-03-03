@@ -19,7 +19,7 @@ namespace TgSpamer
         {
             if (File.Exists(TgLoginFile))
                 return JsonConvert.DeserializeObject<TgManager.LoginParameters[]>(File.ReadAllText(TgLoginFile, Encoding.UTF8));
-            var newParams = new[] { new TgManager.LoginParameters(), new TgManager.LoginParameters() };
+            var newParams = new[] { new TgManager.LoginParameters() };
             File.WriteAllText(TgLoginFile, JsonConvert.SerializeObject(newParams, Formatting.Indented), Encoding.UTF8);
             return newParams;
         });
@@ -63,7 +63,20 @@ namespace TgSpamer
                         var chats = TgManager.Manager.GetChannels(client.Value).ToArray();
                         if (!chats.Any(c => c.Id == chat.Id))
                         { // Need to join
-                            client.Value.JoinChatAsync(chat.Id).GetAwaiter().GetResult();
+                            try
+                            {
+                                if (manager.ChatIdToSupergroup.TryGetValue(chat.Id, out var sg))
+                                {
+                                    var pubChat = client.Value.SearchPublicChatAsync(sg.Username).GetAwaiter().GetResult();
+                                    client.Value.OpenChatAsync(pubChat.Id).GetAwaiter().GetResult();
+                                    client.Value.JoinChatAsync(pubChat.Id).GetAwaiter().GetResult();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                logit($"Client {client.Key} failed to join chat {chat.Id} {chat.Title}: {ex}");
+                                Console.WriteLine($"{DateTime.UtcNow:d/M/y H:mm:ss} Client {client.Key} failed to join chat {chat.Id} {chat.Title}: {ex.Message}");
+                            }
                             continue;
                         }
 
@@ -142,7 +155,7 @@ namespace TgSpamer
                 catch (Exception ex)
                 {
                     logit($"Error occured: {ex}");
-                    Console.WriteLine($"{DateTime.UtcNow:d/M/y H:mm:ss} Error: {ex.GetType().Name} {ex.Message} @ {ex.TargetSite?.Name}");
+                    Console.WriteLine($"{DateTime.UtcNow:d/M/y H:mm:ss} Error: {ex.GetType().Name} {ex.Message} @ {ex.StackTrace.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()}");
                 }
             }, null, TimeSpan.Zero, TimeSpan.FromMinutes(3));
 

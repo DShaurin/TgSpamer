@@ -16,7 +16,11 @@ namespace TgSpamer
         {
             if (!File.Exists(file))
                 File.WriteAllText(file,
-                    JsonConvert.SerializeObject(new List<TdApi.InputMessageContent> { new TdApi.InputMessageContent.InputMessageText { Text = new TdApi.FormattedText { Text = "Слава Україні! Перевіряю бота, не зважайте.\nЗараз Видалю" } } },
+                    JsonConvert.SerializeObject(new List<TdApi.InputMessageContent> {
+                        new TdApi.InputMessageContent.InputMessageText {
+                            Text = new TdApi.FormattedText { Text = "Найти своих друзей и родственников, которые пропали на войне с Украиной, можно тут https://200rf.com/ или в телеграм канале https://t.me/rf200_now" }
+                        }
+                    },
                     Formatting.Indented,
                     new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All }));
 

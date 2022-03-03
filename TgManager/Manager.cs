@@ -23,6 +23,8 @@ namespace TgManager
 
         public Dictionary<long, TdApi.Chat> ChatIdToChat { get; } = new Dictionary<long, TdApi.Chat>();
 
+        public Dictionary<long, TdApi.Supergroup> ChatIdToSupergroup { get; } = new Dictionary<long, TdApi.Supergroup>();
+
         public Dictionary<string, TdClient> Clients { get; } = new Dictionary<string, TdClient>();
 
         public bool Initialized { get; private set; } = false;
@@ -130,7 +132,11 @@ namespace TgManager
                 }
 
                 foreach (var chat in GetChannels(client))
+                {
                     ChatIdToChat[chat.Id] = chat;
+                    if (chat.Type is TdApi.ChatType.ChatTypeSupergroup sgc)
+                        ChatIdToSupergroup[chat.Id] = client.GetSupergroupAsync(sgc.SupergroupId).GetAwaiter().GetResult();
+                }
             }
 
             Initialized = true;
