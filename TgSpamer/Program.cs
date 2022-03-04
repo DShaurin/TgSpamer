@@ -57,7 +57,7 @@ namespace TgSpamer
             {
                 try
                 {
-                    foreach (var chat in chatsToSpam)
+                    foreach (var chat in chatsToSpam.OrderBy(_ => rnd.NextDouble()))
                     {
                         var client = manager.Clients.OrderBy(_ => rnd.NextDouble()).First();
                         var chats = TgManager.Manager.GetChannels(client.Value).ToArray();
@@ -122,7 +122,7 @@ namespace TgSpamer
                             history.AddRange(msgs.Messages_);
                         }
 
-                        if (history.Count < 5)
+                        if (history.Count < 5 || (thread == null && !chat.Permissions.CanSendMessages))
                             continue;
 
                         var now = DateTime.UtcNow;
@@ -134,7 +134,7 @@ namespace TgSpamer
                         if (ourLastMsgTimeInt > 0)
                             ourLastMsgTime = DateTimeOffset.FromUnixTimeSeconds(ourLastMsgTimeInt).UtcDateTime;
 
-                        if (now.Subtract(ourLastMsgTime).TotalHours > 3)
+                        if (now.Subtract(ourLastMsgTime).TotalHours > 6.5)
                         {
                             // Let's post again!
                             var text = messages[rnd.Next(0, messages.Count)];
