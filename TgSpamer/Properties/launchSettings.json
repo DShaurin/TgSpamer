@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TgSpamer": {
+      "commandName": "Project",
+      "commandLineArgs": "subscriber"
+    }
+  }
+}
