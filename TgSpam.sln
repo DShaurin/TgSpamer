@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgManager", "TgManager\TgMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TgSpamer", "TgSpamer\TgSpamer.csproj", "{526B4425-7E74-4655-B061-BCB5C154475B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TgSearch", "TgSearch\TgSearch.csproj", "{F0286B0E-AA36-4B0D-A145-B1832601D1D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{526B4425-7E74-4655-B061-BCB5C154475B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{526B4425-7E74-4655-B061-BCB5C154475B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{526B4425-7E74-4655-B061-BCB5C154475B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0286B0E-AA36-4B0D-A145-B1832601D1D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0286B0E-AA36-4B0D-A145-B1832601D1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0286B0E-AA36-4B0D-A145-B1832601D1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0286B0E-AA36-4B0D-A145-B1832601D1D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
